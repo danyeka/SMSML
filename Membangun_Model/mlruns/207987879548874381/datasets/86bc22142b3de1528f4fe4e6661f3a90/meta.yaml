@@ -1,0 +1,15 @@
+digest: a9aaef78
+name: dataset
+profile: '{"num_rows": 5, "num_elements": 50}'
+schema: '{"mlflow_colspec": [{"type": "double", "name": "RevolvingUtilizationOfUnsecuredLines",
+  "required": true}, {"type": "long", "name": "age", "required": true}, {"type": "long",
+  "name": "NumberOfTime30-59DaysPastDueNotWorse", "required": true}, {"type": "double",
+  "name": "DebtRatio", "required": true}, {"type": "double", "name": "MonthlyIncome",
+  "required": true}, {"type": "long", "name": "NumberOfOpenCreditLinesAndLoans", "required":
+  true}, {"type": "long", "name": "NumberOfTimes90DaysLate", "required": true}, {"type":
+  "long", "name": "NumberRealEstateLoansOrLines", "required": true}, {"type": "long",
+  "name": "NumberOfTime60-89DaysPastDueNotWorse", "required": true}, {"type": "double",
+  "name": "NumberOfDependents", "required": true}]}'
+source: '{"tags": {"mlflow.user": "K E I", "mlflow.source.name": "modelling_tuning.py",
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "a668da210f7fb896d0d958b8616470b03d4a89f5"}}'
+source_type: code

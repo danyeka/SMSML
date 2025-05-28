@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/207987879548874381/1dbbdc45f91340fbae8c9ffd4fc45b34/artifacts
+end_time: 1748189437103
+entry_point_name: ''
+experiment_id: '207987879548874381'
+lifecycle_stage: active
+run_id: 1dbbdc45f91340fbae8c9ffd4fc45b34
+run_name: RF_elastic_search_387_30
+run_uuid: 1dbbdc45f91340fbae8c9ffd4fc45b34
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748189392926
+status: 3
+tags: []
+user_id: K E I

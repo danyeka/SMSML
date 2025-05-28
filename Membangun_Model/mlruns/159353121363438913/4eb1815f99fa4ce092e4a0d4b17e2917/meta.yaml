@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/159353121363438913/4eb1815f99fa4ce092e4a0d4b17e2917/artifacts
+end_time: 1748183111016
+entry_point_name: ''
+experiment_id: '159353121363438913'
+lifecycle_stage: active
+run_id: 4eb1815f99fa4ce092e4a0d4b17e2917
+run_name: Logistic_Regression_Credit_Approval
+run_uuid: 4eb1815f99fa4ce092e4a0d4b17e2917
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748183104152
+status: 3
+tags: []
+user_id: K E I

@@ -1,0 +1,40 @@
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.9.2
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 2.22.0
+model_size_bytes: 684524
+model_uuid: b3f6dafd377644d1a10d274239481d4c
+prompts: null
+run_id: cd95f1a5a9c3434dbf280663450f11e0
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "RevolvingUtilizationOfUnsecuredLines", "required":
+    true}, {"type": "long", "name": "age", "required": true}, {"type": "long", "name":
+    "NumberOfTime30-59DaysPastDueNotWorse", "required": true}, {"type": "double",
+    "name": "DebtRatio", "required": true}, {"type": "double", "name": "MonthlyIncome",
+    "required": true}, {"type": "long", "name": "NumberOfOpenCreditLinesAndLoans",
+    "required": true}, {"type": "long", "name": "NumberOfTimes90DaysLate", "required":
+    true}, {"type": "long", "name": "NumberRealEstateLoansOrLines", "required": true},
+    {"type": "long", "name": "NumberOfTime60-89DaysPastDueNotWorse", "required": true},
+    {"type": "double", "name": "NumberOfDependents", "required": true}]'
+  outputs: '[{"type": "long", "required": true}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-05-25 14:25:50.636905'

@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/207987879548874381/b322fd9b4cf840c482b7d9c299c01d88/artifacts
+end_time: 1748190405106
+entry_point_name: ''
+experiment_id: '207987879548874381'
+lifecycle_stage: active
+run_id: b322fd9b4cf840c482b7d9c299c01d88
+run_name: casual-wolf-229
+run_uuid: b322fd9b4cf840c482b7d9c299c01d88
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748189917030
+status: 3
+tags: []
+user_id: K E I

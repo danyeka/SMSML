@@ -1,0 +1,104 @@
+# Preprocessing Summary Report
+
+Generated on: 2025-05-25 19:35:52
+
+## Original Dataset Information
+
+Training data shape: (119385, 11)
+Testing data shape: (29847, 11)
+
+## Preprocessing Steps Applied
+
+1. Removed unnecessary index columns
+2. Handled missing values using median imputation
+3. Removed outliers (records with age = 0)
+4. Removed duplicate records
+
+## Missing Values Summary
+
+### Before Preprocessing
+Training data missing values:
+RevolvingUtilizationOfUnsecuredLines    0
+age                                     0
+NumberOfTime30-59DaysPastDueNotWorse    0
+DebtRatio                               0
+MonthlyIncome                           0
+NumberOfOpenCreditLinesAndLoans         0
+NumberOfTimes90DaysLate                 0
+NumberRealEstateLoansOrLines            0
+NumberOfTime60-89DaysPastDueNotWorse    0
+NumberOfDependents                      0
+SeriousDlqin2yrs                        0
+dtype: int64
+
+Testing data missing values:
+RevolvingUtilizationOfUnsecuredLines    0
+age                                     0
+NumberOfTime30-59DaysPastDueNotWorse    0
+DebtRatio                               0
+MonthlyIncome                           0
+NumberOfOpenCreditLinesAndLoans         0
+NumberOfTimes90DaysLate                 0
+NumberRealEstateLoansOrLines            0
+NumberOfTime60-89DaysPastDueNotWorse    0
+NumberOfDependents                      0
+SeriousDlqin2yrs                        0
+dtype: int64
+
+### After Preprocessing
+Training data missing values:
+RevolvingUtilizationOfUnsecuredLines    0
+age                                     0
+NumberOfTime30-59DaysPastDueNotWorse    0
+DebtRatio                               0
+MonthlyIncome                           0
+NumberOfOpenCreditLinesAndLoans         0
+NumberOfTimes90DaysLate                 0
+NumberRealEstateLoansOrLines            0
+NumberOfTime60-89DaysPastDueNotWorse    0
+NumberOfDependents                      0
+SeriousDlqin2yrs                        0
+dtype: int64
+
+Testing data missing values:
+RevolvingUtilizationOfUnsecuredLines    0
+age                                     0
+NumberOfTime30-59DaysPastDueNotWorse    0
+DebtRatio                               0
+MonthlyIncome                           0
+NumberOfOpenCreditLinesAndLoans         0
+NumberOfTimes90DaysLate                 0
+NumberRealEstateLoansOrLines            0
+NumberOfTime60-89DaysPastDueNotWorse    0
+NumberOfDependents                      0
+SeriousDlqin2yrs                        0
+dtype: int64
+
+## Dataset Statistics After Preprocessing
+
+### Training Data
+       RevolvingUtilizationOfUnsecuredLines  ...  SeriousDlqin2yrs
+count                         119385.000000  ...     119385.000000
+mean                               5.387476  ...          0.067035
+std                              189.877120  ...          0.250084
+min                                0.000000  ...          0.000000
+25%                                0.030366  ...          0.000000
+50%                                0.155122  ...          0.000000
+75%                                0.557262  ...          0.000000
+max                            22198.000000  ...          1.000000
+
+[8 rows x 11 columns]
+
+### Testing Data
+       RevolvingUtilizationOfUnsecuredLines  ...  SeriousDlqin2yrs
+count                          29847.000000  ...      29847.000000
+mean                               8.835425  ...          0.067042
+std                              411.427179  ...          0.250099
+min                                0.000000  ...          0.000000
+25%                                0.029698  ...          0.000000
+50%                                0.150365  ...          0.000000
+75%                                0.550695  ...          0.000000
+max                            50708.000000  ...          1.000000
+
+[8 rows x 11 columns]
+

@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/207987879548874381/3f83e02e445e4a22805745586a10734f/artifacts
+end_time: 1748190405106
+entry_point_name: ''
+experiment_id: '207987879548874381'
+lifecycle_stage: active
+run_id: 3f83e02e445e4a22805745586a10734f
+run_name: defiant-moose-849
+run_uuid: 3f83e02e445e4a22805745586a10734f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748189917030
+status: 3
+tags: []
+user_id: K E I
