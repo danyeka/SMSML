@@ -1,0 +1,38 @@
+name: Model Retraining
+
+on:
+  push:
+    paths:
+      - 'processed/cleaned_training.csv'
+      - 'modelling.py'
+  workflow_dispatch:
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    
+    - name: Install MLflow and dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install mlflow scikit-learn pandas numpy
+    
+    - name: Run MLflow project
+      run: |
+        mlflow run . \
+          -P C=1.0 \
+          -P max_iter=1000 \
+          -P data_path=processed/cleaned_training.csv
+    
+    - name: Upload MLflow artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: mlflow-artifacts
+        path: mlruns/
