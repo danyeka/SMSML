@@ -1,12 +1,13 @@
 import mlflow
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split, RandomizedSearchCV
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, classification_report
 import matplotlib
 matplotlib.use('Agg')  # Non-GUI backend (cocok untuk ML pipeline)
 import numpy as np
+from scipy.stats import uniform, randint
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -78,40 +79,42 @@ print("\n" + "="*60)
 print("HYPERPARAMETER TUNING")
 print("="*60)
 
-# Logistic Regression Grid Search
-print("\n Logistic Regression - Grid Search Tuning...")
+# Logistic Regression Random Search
+print("\n Logistic Regression - Random Search Tuning...")
 
-with mlflow.start_run(run_name="LR_GridSearch_Tuning"):
-    # Parameter grid
-    lr_param_grid = {
-        'C': [0.01, 0.1, 1, 10, 100],
-        'penalty': ['l1', 'l2'],
-        'solver': ['liblinear', 'saga'],
-        'max_iter': [1000]
+with mlflow.start_run(run_name="LR_RandomSearch_Tuning"):
+    # Parameter distributions yang lebih fokus
+    lr_param_dist = {
+        'C': uniform(0.1, 10),  # Range yang lebih sempit
+        'penalty': ['l2'],  # Hanya l2 penalty
+        'solver': ['lbfgs'],  # Solver yang lebih cepat
+        'max_iter': [500]  # Iterasi yang lebih sedikit
     }
     
-    # Grid search
-    lr_grid = GridSearchCV(
+    # Random search
+    lr_random = RandomizedSearchCV(
         LogisticRegression(random_state=42),
-        lr_param_grid,
-        cv=5,
+        lr_param_dist,
+        n_iter=5,  # Kurangi jumlah iterasi
+        cv=3,      # Kurangi fold CV
         scoring='accuracy',
         n_jobs=-1,
-        verbose=1
+        verbose=1,
+        random_state=42
     )
     
-    lr_grid.fit(X_train_scaled, y_train)
+    lr_random.fit(X_train_scaled, y_train)
     
     # Best model
-    lr_best_model = lr_grid.best_estimator_
+    lr_best_model = lr_random.best_estimator_
     lr_best_accuracy = lr_best_model.score(X_test_scaled, y_test)
     
     # Generate predictions for classification report
     predictions = lr_best_model.predict(X_test_scaled)
     
     # Log results
-    mlflow.log_params(lr_grid.best_params_)
-    mlflow.log_metric("best_cv_score", lr_grid.best_score_)
+    mlflow.log_params(lr_random.best_params_)
+    mlflow.log_metric("best_cv_score", lr_random.best_score_)
     mlflow.log_metric("test_accuracy", lr_best_accuracy)
     
     # Log model with proper input example
@@ -121,8 +124,8 @@ with mlflow.start_run(run_name="LR_GridSearch_Tuning"):
         input_example=pd.DataFrame(X_train_scaled[:5], columns=X_train.columns)
     )
     
-    print(f"Best LR Parameters: {lr_grid.best_params_}")
-    print(f"Best CV Score: {lr_grid.best_score_:.4f}")
+    print(f"Best LR Parameters: {lr_random.best_params_}")
+    print(f"Best CV Score: {lr_random.best_score_:.4f}")
     print(f"Test Accuracy: {lr_best_accuracy:.4f}")
 
 # Tuned models results

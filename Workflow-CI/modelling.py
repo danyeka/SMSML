@@ -4,9 +4,9 @@ import os
 import numpy as np
 import warnings
 import sys
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 from sklearn.preprocessing import StandardScaler
 
 if __name__ == "__main__":
@@ -34,33 +34,53 @@ if __name__ == "__main__":
         stratify=y
     )
 
-    # Scaling optional untuk Gradient Boosting
+    # Scaling penting untuk Logistic Regression
     scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
 
-    input_example = pd.DataFrame(X_train[:5])
+    input_example = pd.DataFrame(X_train_scaled[:5], columns=X_train.columns)
 
     # Ambil parameter dari command-line atau pakai default
-    n_estimators = int(sys.argv[1]) if len(sys.argv) > 1 else 100
-    max_depth = int(sys.argv[2]) if len(sys.argv) > 2 else 3
+    C = float(sys.argv[1]) if len(sys.argv) > 1 else 1.0
+    max_iter = int(sys.argv[2]) if len(sys.argv) > 2 else 1000
 
-    with mlflow.start_run(run_name="GradientBoosting_CreditApproval"):
-        model = GradientBoostingClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
-        model.fit(X_train, y_train)
+    with mlflow.start_run(run_name="LogisticRegression_CreditApproval"):
+        model = LogisticRegression(
+            C=C,
+            max_iter=max_iter,
+            random_state=42
+        )
+        model.fit(X_train_scaled, y_train)
 
-        predictions = model.predict(X_test)
+        predictions = model.predict(X_test_scaled)
+        pred_proba = model.predict_proba(X_test_scaled)[:, 1]
+
+        # Calculate metrics
         accuracy = accuracy_score(y_test, predictions)
+        precision = precision_score(y_test, predictions, average='weighted')
+        recall = recall_score(y_test, predictions, average='weighted')
+        f1 = f1_score(y_test, predictions, average='weighted')
+        auc_roc = roc_auc_score(y_test, pred_proba, average='weighted')
 
-        # Logging model & metric
+        # Logging model & metrics
         mlflow.sklearn.log_model(
             sk_model=model,
             artifact_path="model",
             input_example=input_example
         )
-        mlflow.log_param("n_estimators", n_estimators)
-        mlflow.log_param("max_depth", max_depth)
-        mlflow.log_param("model_type", "GradientBoosting")
+        mlflow.log_param("C", C)
+        mlflow.log_param("max_iter", max_iter)
+        mlflow.log_param("model_type", "LogisticRegression")
         mlflow.log_metric("accuracy", accuracy)
+        mlflow.log_metric("precision", precision)
+        mlflow.log_metric("recall", recall)
+        mlflow.log_metric("f1_score", f1)
+        mlflow.log_metric("auc_roc", auc_roc)
 
-        print(f"Model trained. Accuracy: {accuracy:.4f}")
+        print(f"Model trained with the following metrics:")
+        print(f"Accuracy: {accuracy:.4f}")
+        print(f"Precision: {precision:.4f}")
+        print(f"Recall: {recall:.4f}")
+        print(f"F1-score: {f1:.4f}")
+        print(f"AUC-ROC: {auc_roc:.4f}")
