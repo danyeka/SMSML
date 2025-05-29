@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/538289356029555663/1faee1f0fe1a4f0abf174e666150ce50/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '538289356029555663'
+lifecycle_stage: active
+run_id: 1faee1f0fe1a4f0abf174e666150ce50
+run_name: LR_GridSearch_Tuning
+run_uuid: 1faee1f0fe1a4f0abf174e666150ce50
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748492031507
+status: 1
+tags: []
+user_id: K E I

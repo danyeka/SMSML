@@ -1,6 +1,6 @@
 """
 Automated Data Preprocessing Script for Credit Default Dataset
-Author: Ida-Sri-Afiqah
+Author: Dany Eka
 Date: May 21, 2025
 """
 

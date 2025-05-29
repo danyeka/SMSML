@@ -19,8 +19,8 @@ mlflow.set_experiment("Credit Scoring Hyperparameter Tuning")
 # Load data
 print("Loading data...")
 try:
-    train_data = pd.read_csv('processed/cleaned_training.csv')
-    test_data = pd.read_csv('processed/cleaned_testing.csv')
+    train_data = pd.read_csv('Membangun_Model/processed/cleaned_training.csv')
+    test_data = pd.read_csv('Membangun_Model/processed/cleaned_testing.csv')
     
     print(f"Training data shape: {train_data.shape}")
     print(f"Testing data shape: {test_data.shape}")
@@ -79,7 +79,7 @@ print("HYPERPARAMETER TUNING")
 print("="*60)
 
 # Logistic Regression Grid Search
-print("\n2. Logistic Regression - Grid Search Tuning...")
+print("\n Logistic Regression - Grid Search Tuning...")
 
 with mlflow.start_run(run_name="LR_GridSearch_Tuning"):
     # Parameter grid
