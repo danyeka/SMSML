@@ -45,7 +45,7 @@ jobs:
       # Get latest run_id
       - name: Get latest MLflow run_id
         run: |
-          RUN_ID=$(ls -td Workflow-CI/mlruns/0/*/ | head -n 1 | xargs basename)
+          RUN_ID=$(find Workflow-CI/mlruns -name "meta.yaml" -path "*/mlruns/*/*/meta.yaml" | head -n 1 | xargs dirname | xargs basename)
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Latest run_id: $RUN_ID"
           
