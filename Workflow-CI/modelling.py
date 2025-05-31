@@ -18,7 +18,7 @@ if __name__ == "__main__":
     data = pd.read_csv(file_path)
 
     # Tentukan kolom target
-    target_col = 'Credit_Score'  # Ganti sesuai kebutuhanmu, bisa juga 'SeriousDlqin2yrs' jika itu yang digunakan
+    target_col = 'SeriousDlqin2yrs'  # Ganti sesuai kebutuhanmu, bisa juga 'SeriousDlqin2yrs' jika itu yang digunakan
     if target_col not in data.columns:
         print("Kolom target tidak ditemukan!")
         sys.exit(1)
