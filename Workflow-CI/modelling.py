@@ -81,26 +81,26 @@ if __name__ == "__main__":
             auc_roc = roc_auc_score(y_test, pred_proba, average='weighted')
 
             # Logging model & metrics
-             mlflow.sklearn.log_model(
+            mlflow.sklearn.log_model(
                  sk_model=model,
                  artifact_path="logistic_regression_model",
                  input_example=input_example
              )
-             mlflow.log_param("C", C)
-             mlflow.log_param("max_iter", max_iter)
-             mlflow.log_param("model_type", "LogisticRegression")
-             mlflow.log_metric("accuracy", accuracy)
-             mlflow.log_metric("precision", precision)
-             mlflow.log_metric("recall", recall)
-             mlflow.log_metric("f1_score", f1)
-             mlflow.log_metric("auc_roc", auc_roc)
+            mlflow.log_param("C", C)
+            mlflow.log_param("max_iter", max_iter)
+            mlflow.log_param("model_type", "LogisticRegression")
+            mlflow.log_metric("accuracy", accuracy)
+            mlflow.log_metric("precision", precision)
+            mlflow.log_metric("recall", recall)
+            mlflow.log_metric("f1_score", f1)
+            mlflow.log_metric("auc_roc", auc_roc)
 
-             print(f"Model trained with the following metrics:")
-             print(f"Accuracy: {accuracy:.4f}")
-             print(f"Precision: {precision:.4f}")
-             print(f"Recall: {recall:.4f}")
-             print(f"F1-score: {f1:.4f}")
-             print(f"AUC-ROC: {auc_roc:.4f}")
+            print(f"Model trained with the following metrics:")
+            print(f"Accuracy: {accuracy:.4f}")
+            print(f"Precision: {precision:.4f}")
+            print(f"Recall: {recall:.4f}")
+            print(f"F1-score: {f1:.4f}")
+            print(f"AUC-ROC: {auc_roc:.4f}")
     else:
         # Running inside MLflow project - use the existing active run
         model = LogisticRegression(
