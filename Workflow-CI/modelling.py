@@ -62,12 +62,47 @@ if __name__ == "__main__":
     # Check if we're running inside an MLflow project (which manages runs automatically)
     if mlflow.active_run() is None:
         # Start our own run if not running in MLflow project
-        run_context = mlflow.start_run(run_name="LogisticRegression_CreditApproval")
+        with mlflow.start_run(run_name="LogisticRegression_CreditApproval"):
+            model = LogisticRegression(
+                C=C,
+                max_iter=max_iter,
+                random_state=42
+            )
+            model.fit(X_train_scaled, y_train)
+
+            predictions = model.predict(X_test_scaled)
+            pred_proba = model.predict_proba(X_test_scaled)[:, 1]
+
+            # Calculate metrics
+            accuracy = accuracy_score(y_test, predictions)
+            precision = precision_score(y_test, predictions, average='weighted')
+            recall = recall_score(y_test, predictions, average='weighted')
+            f1 = f1_score(y_test, predictions, average='weighted')
+            auc_roc = roc_auc_score(y_test, pred_proba, average='weighted')
+
+            # Logging model & metrics
+             mlflow.sklearn.log_model(
+                 sk_model=model,
+                 artifact_path="logistic_regression_model",
+                 input_example=input_example
+             )
+             mlflow.log_param("C", C)
+             mlflow.log_param("max_iter", max_iter)
+             mlflow.log_param("model_type", "LogisticRegression")
+             mlflow.log_metric("accuracy", accuracy)
+             mlflow.log_metric("precision", precision)
+             mlflow.log_metric("recall", recall)
+             mlflow.log_metric("f1_score", f1)
+             mlflow.log_metric("auc_roc", auc_roc)
+
+             print(f"Model trained with the following metrics:")
+             print(f"Accuracy: {accuracy:.4f}")
+             print(f"Precision: {precision:.4f}")
+             print(f"Recall: {recall:.4f}")
+             print(f"F1-score: {f1:.4f}")
+             print(f"AUC-ROC: {auc_roc:.4f}")
     else:
-        # Use the existing run from MLflow project
-        run_context = mlflow.active_run()
-    
-    with run_context:
+        # Running inside MLflow project - use the existing active run
         model = LogisticRegression(
             C=C,
             max_iter=max_iter,
@@ -88,7 +123,7 @@ if __name__ == "__main__":
         # Logging model & metrics
         mlflow.sklearn.log_model(
             sk_model=model,
-            artifact_path="model",
+            artifact_path="logistic_regression_model",
             input_example=input_example
         )
         mlflow.log_param("C", C)
