@@ -59,7 +59,15 @@ if __name__ == "__main__":
     C = float(sys.argv[1]) if len(sys.argv) > 1 else 1.0
     max_iter = int(sys.argv[2]) if len(sys.argv) > 2 else 1000
 
-    with mlflow.start_run(run_name="LogisticRegression_CreditApproval"):
+    # Check if we're running inside an MLflow project (which manages runs automatically)
+    if mlflow.active_run() is None:
+        # Start our own run if not running in MLflow project
+        run_context = mlflow.start_run(run_name="LogisticRegression_CreditApproval")
+    else:
+        # Use the existing run from MLflow project
+        run_context = mlflow.active_run()
+    
+    with run_context:
         model = LogisticRegression(
             C=C,
             max_iter=max_iter,
