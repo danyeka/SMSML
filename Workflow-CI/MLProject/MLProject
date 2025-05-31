@@ -1,4 +1,4 @@
-name: credit-scoring-workflow
+name: credit-approval-workflow
 
 conda_env: conda.yaml
 

@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  CSV_URL: "MLproject/cleaned_training.csv"
+  CSV_URL: "Workflow-CI/MLproject/cleaned_training.csv"
   TARGET_VAR: "SeriousDlqin2yrs"
 
 jobs:
@@ -39,7 +39,8 @@ jobs:
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
-          mlflow run MLproject --env-manager=local
+          cd MLProject
+          mlflow run . --env-manager=local
       
       # Get latest run_id
       - name: Get latest MLflow run_id
