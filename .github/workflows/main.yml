@@ -51,6 +51,8 @@ jobs:
           
       # Build Docker Model
       - name: Build Docker Model
+        env:
+          RUN_ID: ${{ env.RUN_ID }}
         run: |
           mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "cc"
 
