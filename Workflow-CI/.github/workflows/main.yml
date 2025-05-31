@@ -11,6 +11,7 @@ on:
 env:
   CSV_URL: "Workflow-CI/MLproject/cleaned_training.csv"
   TARGET_VAR: "SeriousDlqin2yrs"
+  MLFLOW_TRACKING_URI: "http://localhost:5000" 
 
 jobs:
   build:
@@ -35,7 +36,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install mlflow
-          
+      
+      # Start MLflow server (ADD THIS STEP)
+      - name: Start MLflow server
+        run: |
+          mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri file:./mlruns --default-artifact-root file:./mlartifacts &
+          sleep 10  # Wait for server to start
+      
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
@@ -52,7 +59,12 @@ jobs:
       # Build Docker Model
       - name: Build Docker Model
         run: |
+          # Start MLflow server temporarily for Docker build
+          mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri file:./mlruns --default-artifact-root file:./mlartifacts &
+          sleep 10
           mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "cc"
+          # Kill the server after build
+          pkill -f "mlflow server"
 
       # Login to Docker Hub
       - name: Log in to Docker Hub
