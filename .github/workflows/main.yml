@@ -45,7 +45,14 @@ jobs:
       # Get latest run_id
       - name: Get latest MLflow run_id
         run: |
-          RUN_ID=$(find Workflow-CI/mlruns -name "meta.yaml" -path "*/mlruns/*/*/meta.yaml" -exec stat -c "%Y %n" {} \; | sort -nr | head -n 1 | cut -d' ' -f2- | xargs dirname | xargs basename)
+          # First try to find active runs with model
+          RUN_ID=$(find Workflow-CI/mlruns -name "meta.yaml" -path "*/mlruns/*/*/meta.yaml" -exec sh -c 'if [ -d "$(dirname "$1")/artifacts/model" ] && grep -q "lifecycle_stage: active" "$1"; then stat -c "%Y %n" "$1"; fi' _ {} \; | sort -nr | head -n 1 | cut -d' ' -f2- | xargs dirname | xargs basename)
+          
+          # If no active runs found, fallback to any run with model (including finished runs)
+          if [ -z "$RUN_ID" ]; then
+            RUN_ID=$(find Workflow-CI/mlruns -name "meta.yaml" -path "*/mlruns/*/*/meta.yaml" -exec sh -c 'if [ -d "$(dirname "$1")/artifacts/model" ]; then stat -c "%Y %n" "$1"; fi' _ {} \; | sort -nr | head -n 1 | cut -d' ' -f2- | xargs dirname | xargs basename)
+          fi
+          
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Latest run_id: $RUN_ID"
           
