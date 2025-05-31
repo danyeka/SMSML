@@ -12,16 +12,16 @@ on:
 
 jobs:
   retrain:
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest  # Perbaikan typo
     defaults:
       run:
         working-directory: Workflow-CI
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4  # Update ke versi terbaru
     
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4  # Update ke versi terbaru
       with:
         python-version: '3.9'
     
@@ -33,7 +33,7 @@ jobs:
     - name: Start MLflow server
       run: |
         mlflow server --host 127.0.0.1 --port 5000 &
-        sleep 5
+        sleep 10  # Tambah waktu tunggu
     
     - name: Run MLflow project
       run: |
@@ -45,7 +45,8 @@ jobs:
         MLFLOW_TRACKING_URI: http://127.0.0.1:5000
     
     - name: Upload MLflow artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4  # Update ke versi terbaru
       with:
         name: mlflow-artifacts
         path: Workflow-CI/mlruns/
+        if-no-files-found: warn  # Tambahan untuk handling file tidak ditemukan
