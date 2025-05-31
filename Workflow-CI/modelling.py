@@ -4,6 +4,8 @@ import os
 import numpy as np
 import warnings
 import sys
+import mlflow
+import mlflow.sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
@@ -12,6 +14,18 @@ from sklearn.preprocessing import StandardScaler
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(42)
+    
+    # Set MLflow tracking URI to use local mlruns directory
+    mlflow.set_tracking_uri("file:./mlruns")
+    
+    # Set or create experiment
+    experiment_name = "Credit Approval Basic Models V1"
+    try:
+        experiment_id = mlflow.create_experiment(experiment_name)
+    except mlflow.exceptions.MlflowException:
+        experiment_id = mlflow.get_experiment_by_name(experiment_name).experiment_id
+    
+    mlflow.set_experiment(experiment_name)
 
     # Load data from command line or default path
     file_path = sys.argv[3] if len(sys.argv) > 3 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "processed/cleaned_training.csv")

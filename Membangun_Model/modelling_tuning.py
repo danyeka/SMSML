@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore')
 mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 
 # Create a new MLflow Experiment
-mlflow.set_experiment("Credit Scoring Hyperparameter Tuning")
+mlflow.set_experiment("Credit Approval Hyperparameter Tuning")
 
 # Load data
 print("Loading data...")
@@ -32,7 +32,7 @@ except FileNotFoundError as e:
     exit(1)
 
 # Identify target column
-target_candidates = ['SeriousDlqin2yrs', 'target', 'Credit_Score', 'default']
+target_candidates = ['SeriousDlqin2yrs']
 target_column = None
 
 for col in target_candidates:

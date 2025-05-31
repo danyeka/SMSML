@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/404909235653984196/6d58cfc1ded24df58827480d017c3834/artifacts
+end_time: 1748696830458
+entry_point_name: ''
+experiment_id: '404909235653984196'
+lifecycle_stage: active
+run_id: 6d58cfc1ded24df58827480d017c3834
+run_name: LR_RandomSearch_Tuning
+run_uuid: 6d58cfc1ded24df58827480d017c3834
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748696816134
+status: 3
+tags: []
+user_id: K E I
