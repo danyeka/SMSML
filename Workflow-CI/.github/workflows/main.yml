@@ -9,8 +9,8 @@ on:
       - main
 
 env:
-  CSV_URL: "MLproject/train_pca.csv"
-  TARGET_VAR: "Credit_Score"
+  CSV_URL: "MLproject/cleaned_training.csv"
+  TARGET_VAR: "SeriousDlqin2yrs"
 
 jobs:
   build:
