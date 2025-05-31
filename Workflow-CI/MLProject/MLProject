@@ -1,11 +1,11 @@
 name: credit-approval-workflow
 
-conda_env: Workflow-CI/MLproject/conda.yaml
+conda_env: conda.yaml
 
 entry_points:
   main:
     parameters:
       C: {type: float, default: 1.0}
       max_iter: {type: int, default: 1000}
-      data_path: {type: string, default: "Workflow-CI/MLproject/cleaned_training.csv"}
+      data_path: {type: string, default: "cleaned_training.csv"}
     command: "python Workflow-CI/modelling.py {C} {max_iter} {data_path}"
