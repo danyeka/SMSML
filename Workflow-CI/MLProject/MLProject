@@ -8,4 +8,4 @@ entry_points:
       C: {type: float, default: 1.0}
       max_iter: {type: int, default: 1000}
       data_path: {type: string, default: "cleaned_training.csv"}
-    command: "python Workflow-CI/modelling.py {C} {max_iter} {data_path}"
+    command: "python ../modelling.py {C} {max_iter} {data_path}"
