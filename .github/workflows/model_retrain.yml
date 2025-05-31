@@ -45,7 +45,7 @@ jobs:
         MLFLOW_TRACKING_URI: http://127.0.0.1:5000
     
     - name: Upload MLflow artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: mlflow-artifacts
         path: Workflow-CI/mlruns/
