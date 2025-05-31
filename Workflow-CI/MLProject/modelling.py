@@ -11,6 +11,11 @@ from sklearn.preprocessing import StandardScaler
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(42)
+    
+    # Set MLflow tracking URI for Docker compatibility
+    # Use environment variable if available, otherwise use local file system
+    tracking_uri = os.getenv('MLFLOW_TRACKING_URI', 'file:./mlruns')
+    mlflow.set_tracking_uri(tracking_uri)
 
     # Read the csv file
     file_path = sys.argv[3] if len(sys.argv) > 3 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "cleaned_training.csv")
@@ -41,7 +46,7 @@ if __name__ == "__main__":
 
         mlflow.sklearn.log_model(
             sk_model=model,
-            artifact_path="logistic_regression_model",
+            artifact_path="model",
             input_example=input_example
         )
         
