@@ -17,6 +17,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+
+
+
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v3
@@ -48,7 +51,7 @@ jobs:
       - name: Build Docker Model
         run: |
           RUN_ID=$(mlflow runs list --experiment-id 0 | awk 'NR==3 {print $3}')
-          MLFLOW_TRACKING_URI=http://localhost:5000 mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "creditapproval"
+          MLFLOW_TRACKING_URI=http://localhost:5000 mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "cc"
           # Kill the server after build
           pkill -f "mlflow server"
 
