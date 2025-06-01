@@ -109,6 +109,12 @@ with mlflow.start_run(run_name="Logistic Regression"):
         input_example=input_example
     )
     
+    # Register model
+    mlflow.register_model(
+        f"runs:/{mlflow.active_run().info.run_id}/logistic_regression_model",
+        "credit-approval"
+    )
+    
     print(f"\nModel Performance:")
     print(f"Accuracy: {lr_accuracy:.4f}")
     print(f"Precision: {lr_precision:.4f}")

@@ -48,7 +48,7 @@ jobs:
       - name: Build Docker Model
         run: |
           RUN_ID=$(mlflow runs list --experiment-id 0 | awk 'NR==3 {print $3}')
-          MLFLOW_TRACKING_URI=http://localhost:5000 mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "cc"
+          MLFLOW_TRACKING_URI=http://localhost:5000 mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "creditapproval"
           # Kill the server after build
           pkill -f "mlflow server"
 
