@@ -9,8 +9,9 @@ from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_sco
 import warnings
 warnings.filterwarnings('ignore')
 
-# Set MLflow tracking URI
-mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+# Set MLflow tracking URI for Docker compatibility
+tracking_uri = os.getenv('MLFLOW_TRACKING_URI', 'http://127.0.0.1:5000')
+mlflow.set_tracking_uri(tracking_uri)
 
 # Create a new MLflow Experiment
 mlflow.set_experiment("Credit Approval Basic Models V1")
