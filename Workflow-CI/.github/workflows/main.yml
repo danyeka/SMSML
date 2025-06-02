@@ -9,8 +9,8 @@ on:
       - main
 
 env:
-  CSV_URL: "MLproject/train_pca.csv"
-  TARGET_VAR: "Credit_Score"
+  CSV_URL: "Workflow-CI/MLproject/cleaned_training.csv"
+  TARGET_VAR: "SeriousDlqin2yrs"
 
 jobs:
   build:
@@ -21,25 +21,27 @@ jobs:
       - uses: actions/checkout@v3
 
       # Setup Python 3.12.7
-      - name: Set up Python 3.9.2
+      - name: Set up Python 3.12.7
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9.2"
+          python-version: "3.12.7"
       
       # Check Env Variables
       - name: Check Env
         run: |
           echo $CSV_URL
+      
       # Install mlflow
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mlflow  
+          pip install mlflow
           
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
-          mlflow run MLproject --env-manager=local 
+          cd Workflow-CI
+          mlflow run MLproject --env-manager=local
       
       # Get latest run_id
       - name: Get latest MLflow run_id
@@ -51,7 +53,7 @@ jobs:
       # Build Docker Model
       - name: Build Docker Model
         run: |
-          mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "cc" 
+          mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "cc"
 
       # Login to Docker Hub
       - name: Log in to Docker Hub
