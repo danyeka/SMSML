@@ -1,0 +1,230 @@
+groups:
+  - name: ml_model_alerts
+    rules:
+      # Model Performance Alerts
+      - alert: ModelAccuracyDrop
+        expr: ml_model_performance_accuracy < 0.75
+        for: 5m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: model_performance
+        annotations:
+          summary: "Model accuracy has dropped below threshold"
+          description: "Model accuracy is {{ $value | humanizePercentage }}, which is below the 75% threshold"
+          runbook_url: "https://wiki.company.com/ml-model-accuracy-drop"
+
+      - alert: ModelAccuracyCritical
+        expr: ml_model_performance_accuracy < 0.65
+        for: 2m
+        labels:
+          severity: critical
+          service: ml-inference
+          alert_type: model_performance
+        annotations:
+          summary: "CRITICAL: Model accuracy severely degraded"
+          description: "Model accuracy is {{ $value | humanizePercentage }}, which is critically low (below 65%)"
+          runbook_url: "https://wiki.company.com/ml-model-accuracy-critical"
+
+      - alert: ModelPrecisionDrop
+        expr: ml_model_performance_precision < 0.70
+        for: 5m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: model_performance
+        annotations:
+          summary: "Model precision has dropped below threshold"
+          description: "Model precision is {{ $value | humanizePercentage }}, which is below the 70% threshold"
+
+      - alert: ModelRecallDrop
+        expr: ml_model_performance_recall < 0.65
+        for: 5m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: model_performance
+        annotations:
+          summary: "Model recall has dropped below threshold"
+          description: "Model recall is {{ $value | humanizePercentage }}, which is below the 65% threshold"
+
+  - name: ml_system_alerts
+    rules:
+      # System Resource Alerts
+      - alert: HighCPUUsage
+        expr: system_cpu_usage_percent > 80
+        for: 3m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: system_resources
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is {{ $value }}%, which is above 80% for more than 3 minutes"
+
+      - alert: HighMemoryUsage
+        expr: system_memory_usage_percent > 85
+        for: 3m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: system_resources
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is {{ $value }}%, which is above 85% for more than 3 minutes"
+
+      - alert: LowDiskSpace
+        expr: system_disk_usage_percent > 90
+        for: 1m
+        labels:
+          severity: critical
+          service: ml-inference
+          alert_type: system_resources
+        annotations:
+          summary: "CRITICAL: Low disk space"
+          description: "Disk usage is {{ $value }}%, which is above 90%. Immediate action required."
+
+  - name: ml_service_alerts
+    rules:
+      # Service Health Alerts
+      - alert: HighErrorRate
+        expr: ml_error_rate_percent > 5
+        for: 2m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: service_health
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }}%, which is above 5% threshold"
+
+      - alert: CriticalErrorRate
+        expr: ml_error_rate_percent > 15
+        for: 1m
+        labels:
+          severity: critical
+          service: ml-inference
+          alert_type: service_health
+        annotations:
+          summary: "CRITICAL: Very high error rate"
+          description: "Error rate is {{ $value }}%, which is critically high (above 15%)"
+
+      - alert: HighLatency
+        expr: ml_prediction_latency_p95_seconds > 2.0
+        for: 3m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: performance
+        annotations:
+          summary: "High prediction latency detected"
+          description: "95th percentile latency is {{ $value }}s, which is above 2 seconds"
+
+      - alert: ServiceDown
+        expr: up{job="ml-inference"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: ml-inference
+          alert_type: service_availability
+        annotations:
+          summary: "CRITICAL: ML Inference service is down"
+          description: "The ML inference service has been down for more than 1 minute"
+
+      - alert: LowThroughput
+        expr: ml_throughput_requests_per_second < 0.1
+        for: 10m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: performance
+        annotations:
+          summary: "Low throughput detected"
+          description: "Request throughput is {{ $value }} RPS, which is unusually low"
+
+  - name: ml_data_quality_alerts
+    rules:
+      # Data Quality Alerts
+      - alert: DataDriftDetected
+        expr: ml_data_drift_score > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: data_quality
+        annotations:
+          summary: "Data drift detected"
+          description: "Data drift score is {{ $value }}, indicating significant drift from training data"
+
+      - alert: HighDataDrift
+        expr: ml_data_drift_score > 1.0
+        for: 2m
+        labels:
+          severity: critical
+          service: ml-inference
+          alert_type: data_quality
+        annotations:
+          summary: "CRITICAL: High data drift detected"
+          description: "Data drift score is {{ $value }}, indicating severe drift. Model retraining may be required."
+
+      - alert: HighMissingValues
+        expr: ml_data_quality_missing_values_percent > 20
+        for: 5m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: data_quality
+        annotations:
+          summary: "High percentage of missing values"
+          description: "{{ $value }}% of recent data contains missing values, which is above 20% threshold"
+
+      - alert: HighOutlierRate
+        expr: ml_data_quality_outliers_percent > 15
+        for: 5m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: data_quality
+        annotations:
+          summary: "High outlier rate detected"
+          description: "{{ $value }}% of recent data are outliers, which is above 15% threshold"
+
+  - name: ml_business_alerts
+    rules:
+      # Business Logic Alerts
+      - alert: UnusualPredictionDistribution
+        expr: |
+          (
+            rate(ml_predictions_total{prediction_class="1"}[1h]) / 
+            rate(ml_predictions_total[1h])
+          ) > 0.3
+        for: 10m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: business_logic
+        annotations:
+          summary: "Unusual prediction distribution"
+          description: "High-risk predictions are {{ $value | humanizePercentage }} of total, which is above normal 30% threshold"
+
+      - alert: NoRecentPredictions
+        expr: increase(ml_predictions_total[1h]) == 0
+        for: 30m
+        labels:
+          severity: warning
+          service: ml-inference
+          alert_type: business_logic
+        annotations:
+          summary: "No predictions made recently"
+          description: "No predictions have been made in the last hour, which may indicate a service issue"
+
+      - alert: ModelVersionMismatch
+        expr: changes(ml_model_version_info[1h]) > 0
+        for: 0m
+        labels:
+          severity: info
+          service: ml-inference
+          alert_type: deployment
+        annotations:
+          summary: "Model version changed"
+          description: "A new model version has been deployed. Monitor performance closely."
