@@ -8,7 +8,10 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score
 import warnings
 warnings.filterwarnings('ignore')
+import dagshub
+import os
 
+dagshub.init(repo_owner='danyeka', repo_name='credit-approval', mlflow=True)
 # Set MLflow tracking URI for Docker compatibility
 tracking_uri = os.getenv('MLFLOW_TRACKING_URI', 'http://127.0.0.1:5000')
 mlflow.set_tracking_uri(tracking_uri)
@@ -18,8 +21,8 @@ mlflow.set_experiment("Credit Approval Basic Models V1")
 
 # Load data
 print("Loading data...")
-train_data = pd.read_csv('Membangun_Model/processed/cleaned_training.csv')
-test_data = pd.read_csv('Membangun_Model/processed/cleaned_testing.csv')
+train_data = pd.read_csv('processed/cleaned_training.csv')
+test_data = pd.read_csv('processed/cleaned_testing.csv')
 
 print(f"Training data shape: {train_data.shape}")
 print(f"Testing data shape: {test_data.shape}")
