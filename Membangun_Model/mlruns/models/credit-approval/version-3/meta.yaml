@@ -1,0 +1,13 @@
+aliases: []
+creation_timestamp: 1749113503483
+current_stage: None
+description: null
+last_updated_timestamp: 1749113503483
+name: credit-approval
+run_id: 25f3862caaf04b809bed7c74265be62f
+run_link: null
+source: file:///C:/Users/immab/Documents/SMSML/Membangun_Model/mlruns/485918564791876839/25f3862caaf04b809bed7c74265be62f/artifacts/logistic_regression_model
+status: READY
+status_message: null
+user_id: null
+version: 3

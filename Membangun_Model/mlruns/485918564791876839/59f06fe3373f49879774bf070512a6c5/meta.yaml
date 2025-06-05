@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/immab/Documents/SMSML/Membangun_Model/mlruns/485918564791876839/59f06fe3373f49879774bf070512a6c5/artifacts
+deleted_time: 1749115851629
+end_time: 1749113329316
+entry_point_name: ''
+experiment_id: '485918564791876839'
+lifecycle_stage: deleted
+run_id: 59f06fe3373f49879774bf070512a6c5
+run_name: Logistic Regression
+run_uuid: 59f06fe3373f49879774bf070512a6c5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1749113322939
+status: 3
+tags: []
+user_id: K E I
